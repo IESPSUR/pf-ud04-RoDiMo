@@ -7,8 +7,8 @@ class Marca(models.Model):
 
 
 class Producto(models.Model):
-    nombre = models.CharField(max_length=60, unique=True)
-    modelo = models.CharField(max_length=60, unique=True)
+    nombre = models.CharField(max_length=60, unique=True, primary_key=True)
+    modelo = models.CharField(max_length=60)
     unidades = models.IntegerField()
     precio = models.FloatField();
     detalles = models.CharField(max_length=100)
@@ -20,6 +20,6 @@ class Compra(models.Model):
     importe = models.FloatField()
     unidades = models.IntegerField()
     nombre = models.ForeignKey('Producto', to_field='nombre', related_name='Nombre', on_delete=models.CASCADE)
-    modelo = models.ForeignKey('Producto', to_field='modelo', related_name='Modelo', on_delete=models.CASCADE)
+
 
 
