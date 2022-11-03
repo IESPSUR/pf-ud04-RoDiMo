@@ -1,4 +1,5 @@
 from django.db import models
+from django.forms import ModelForm
 
 
 # Create your models here.
@@ -20,6 +21,7 @@ class Producto(models.Model):
     def __str__(self):
         return self.nombre
 
+
 class Compra(models.Model):
     fecha = models.DateTimeField()
     importe = models.FloatField()
@@ -27,4 +29,7 @@ class Compra(models.Model):
     nombre = models.ForeignKey('Producto', to_field='nombre', related_name='Nombre', on_delete=models.CASCADE)
 
 
-
+class ProductoForm(ModelForm):
+    class Meta:
+        model = Producto
+        fields = '__all__'
