@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <h2>Producto</h2>
+    {% if producto %}
+        {% for p in producto %}
+
+            <h3>{{ p.nombre }}</h3>
+            <ul>
+                <li>
+                    Modelo: {{ p.modelo }}
+                </li>
+                <li>
+                    Unidades: {{ p.unidades }}
+                </li>
+                <li>
+                    Precio:  {{ p.precio }}€
+                </li>
+                <li>
+                    Detalles: {{ p.detalles }}
+                </li>
+                <li>
+                    Marca: {{ p.marca }}
+                </li>
+            </ul>
+        {% endfor %}
+    {% endif %}
+
+    <h2><a href="http://localhost:8000/admin/tienda/producto/add/">Añade un nuevo producto</a></h2>
+</body>
+</html>
