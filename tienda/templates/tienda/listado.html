@@ -12,6 +12,9 @@
             <h3>{{ p.nombre }}</h3>
             <ul>
                 <li>
+                    ID: {{ p.id }}
+                </li>
+                <li>
                     Modelo: {{ p.modelo }}
                 </li>
                 <li>
@@ -27,7 +30,10 @@
                     Marca: {{ p.marca }}
                 </li>
             </ul>
+            <a href={% url 'update' p.id %}>Actualizar</a>
+            <a href={% url 'delete' p.id %}>Eliminar</a>
         {% endfor %}
+
     {% endif %}
 
     <h2><a href="{% url 'nuevo' %}">Añade un nuevo producto</a></h2>

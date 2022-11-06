@@ -11,10 +11,10 @@ class Marca(models.Model):
 
 
 class Producto(models.Model):
-    nombre = models.CharField(max_length=60, unique=True, primary_key=True)
+    nombre = models.CharField(max_length=60, unique=True)
     modelo = models.CharField(max_length=60)
     unidades = models.IntegerField()
-    precio = models.FloatField();
+    precio = models.FloatField()
     detalles = models.CharField(max_length=100)
     marca = models.ForeignKey('Marca', on_delete=models.CASCADE)
 

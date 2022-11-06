@@ -5,8 +5,7 @@
     <title>Title</title>
 </head>
 <body>
-    <h1>Agregue un nuevo producto</h1>
-    <form action="{% url 'nuevo' %}" method="POST">
+    <form  method="POST">
         {% csrf_token %}
         {{ form }}
         <input type="submit" value="Submit">
