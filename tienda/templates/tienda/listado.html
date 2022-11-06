@@ -1,15 +1,11 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends 'tienda/base.html' %}
+
+{% block content %}
     <h2>Producto</h2>
     {% if producto %}
         {% for p in producto %}
 
-            <h3>{{ p.nombre }}</h3>
+            <h6>{{ p.nombre }}</h6>
             <ul>
                 <li>
                     ID: {{ p.id }}
@@ -32,10 +28,11 @@
             </ul>
             <a href={% url 'update' p.id %}>Actualizar</a>
             <a href={% url 'delete' p.id %}>Eliminar</a>
+            <br>
+            <br>
         {% endfor %}
 
     {% endif %}
 
     <h2><a href="{% url 'nuevo' %}">Añade un nuevo producto</a></h2>
-</body>
-</html>
+{% endblock %}

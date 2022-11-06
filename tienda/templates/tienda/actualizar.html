@@ -1,14 +1,11 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends 'tienda/base.html' %}
+
+{% block content %}
     <form  method="POST">
         {% csrf_token %}
         {{ form }}
         <input type="submit" value="Submit">
+        <br>
+        <a href="{% url 'listado' %}">Regresar</a>
     </form>
-</body>
-</html>
+{% endblock %}
