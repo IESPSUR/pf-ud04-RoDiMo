@@ -5,7 +5,7 @@ from django.contrib.auth.decorators import login_required
 
 
 # Create your views here.
-@login_required(login_url="/admin")
+
 def welcome(request):
     return render(request, 'tienda/index.html', {})
 
