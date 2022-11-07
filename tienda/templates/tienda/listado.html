@@ -26,13 +26,16 @@
                     Marca: {{ p.marca }}
                 </li>
             </ul>
-            <a href={% url 'update' p.id %}>Actualizar</a>
-            <a href={% url 'delete' p.id %}>Eliminar</a>
-            <br>
-            <br>
+            {% if user.is_authenticated %}
+                <a href={% url 'update' p.id %}>Actualizar</a>
+                <a href={% url 'delete' p.id %}>Eliminar</a>
+                <br>
+                <br>
+            {% endif %}
         {% endfor %}
 
     {% endif %}
-
-    <h2><a href="{% url 'nuevo' %}">Añade un nuevo producto</a></h2>
+    {% if user.is_authenticated %}
+        <h2><a href="{% url 'nuevo' %}">Añade un nuevo producto</a></h2>
+    {% endif %}
 {% endblock %}

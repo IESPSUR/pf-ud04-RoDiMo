@@ -1,8 +1,11 @@
+from django.contrib.auth.forms import AuthenticationForm
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import *
+from django.contrib.auth.decorators import login_required
 
 
 # Create your views here.
+@login_required(login_url="/admin")
 def welcome(request):
     return render(request, 'tienda/index.html', {})
 
@@ -55,21 +58,14 @@ def actualizar_prod(request, pk):
     return render(request, 'tienda/actualizar.html', {'form': form})
 
 
-"""def eliminar_prod(request, pk):
-    producto = get_object_or_404(Producto, id=pk)
-    producto.delete()
-
-    return redirect('listado')"""
-
-
 def eliminar_prod(request, pk):
     producto = get_object_or_404(Producto, id=pk)
 
     if request.method == "POST":
-
         producto.delete()
         return redirect('listado')
     contexto = {
         "prod": producto
     }
     return render(request, 'tienda/cofirmar_borrado.html', contexto)
+
