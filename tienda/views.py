@@ -1,6 +1,5 @@
 from datetime import datetime
 
-from django.contrib.auth.forms import AuthenticationForm
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import *
 
@@ -79,15 +78,35 @@ def listado_compra(request):
     return render(request, 'tienda/listado_compra.html', {'producto': producto})
 
 
-def checkout(request, pk):
+"""def checkout(request, pk):
     compra = get_object_or_404(Compra, id=pk)
-    form = CheckoutForm(instance=compra)
+
+    form = CheckoutForm()
+    if request.method == "POST":
+        form = CheckoutForm(request.POST)
+
+        if form.is_valid():
+
+            compra.producto = form.cleaned_data['nombre']
+            compra.unidades = form.cleaned_data['unidades']
+            compra.importe = form.cleaned_data['importe']
+            compra.fecha = form.cleaned_data['fecha']
+
+            compra.save()
+        else:
+            print("Formulario invalido")
+    return render(request, 'tienda/checkout.html', {'form': form})
+"""
+
+
+def checkout(request, pk):
+    form = CheckoutForm()
+    producto = Producto.objects.all()
+
     if request.method == "POST":
         form = CheckoutForm(request.POST)
         if form.is_valid():
-
-            compra.nombre = form.cleaned_data['nombre']
-            compra.unidades = form.cleaned_data['unidades']
-            compra.importe = form.cleaned_data['importe']
-            compra.fecha = datetime.now()
-    return render(request, 'tienda/checkout.html', {'form': form})
+            unidades = form.cleaned_data['unidades']
+            return render(request, 'tienda/listado_compra.html', {'unidades': unidades, 'producto': producto, 'pk': pk})
+    else:
+        return render(request, 'tienda/checkout.html', {'form': form, 'producto': producto,'pk':pk})

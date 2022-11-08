@@ -1,7 +1,34 @@
 {% extends 'tienda/base.html' %}
 
 {% block content %}
-    <h2>Producto</h2>
+
+
+        {% for p in producto %}
+            {% if p.id ==  pk%}
+                <h2>Producto: {{ p.nombre }}</h2>
+                 <ul>
+                    <li>
+                        ID: {{ p.id }}
+                    </li>
+                    <li>
+                        Modelo: {{ p.modelo }}
+                    </li>
+                    <li>
+                        Unidades: {{ p.unidades }}
+                    </li>
+                    <li>
+                        Precio:  {{ p.precio }}€
+                    </li>
+                    <li>
+                        Detalles: {{ p.detalles }}
+                    </li>
+                    <li>
+                        Marca: {{ p.marca }}
+                    </li>
+                 </ul>
+            {% endif %}
+        {% endfor %}
+
     <form method="POST">
     {% csrf_token %}
         {{ form }}

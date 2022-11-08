@@ -1,5 +1,6 @@
 from django.db import models
 from django.forms import ModelForm
+from django import forms
 
 
 # Create your models here.
@@ -19,14 +20,14 @@ class Producto(models.Model):
     marca = models.ForeignKey('Marca', on_delete=models.CASCADE)
 
     def __str__(self):
-        return self.nombre
+        return str(self.id)
 
 
 class Compra(models.Model):
     fecha = models.DateTimeField()
     importe = models.FloatField()
     unidades = models.IntegerField()
-    nombre = models.ForeignKey('Producto', on_delete=models.CASCADE)
+    producto = models.ForeignKey('Producto', on_delete=models.CASCADE)
 
 
 class ProductoForm(ModelForm):
@@ -35,7 +36,5 @@ class ProductoForm(ModelForm):
         fields = '__all__'
 
 
-class CheckoutForm(ModelForm):
-    class Meta:
-        model = Compra
-        fields = '__all__'
+class CheckoutForm(forms.Form):
+    unidades = forms.FloatField(label='unidades')
