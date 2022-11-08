@@ -4,6 +4,6 @@
     <form method="POST">
         {% csrf_token %}
         <h1>Quieres eliminar el producto: "{{ prod.nombre }}"</h1>
-        <p><input type="submit" value="Yes"/>  <a href="{% url 'listado' %}">Cancelar </a></p>
+        <p><input type="submit" value="SI"/>  <a href="{% url 'listado' %}">Cancelar </a></p>
     </form>
 {% endblock %}

@@ -26,13 +26,19 @@
                         Marca: {{ p.marca }}
                     </li>
                  </ul>
+
+                {% if validacion_unidades == False %}
+                    <p>Se excede el numero de unidades</p>
+                {% endif %}
             {% endif %}
+
         {% endfor %}
+
 
     <form method="POST">
     {% csrf_token %}
         {{ form }}
-        <input type="submit" value="Submit">
+       <p> <input type="submit" value="Comprar"> <a href="{% url 'listado_compra' %}">Productos </a></p>
     </form>
 
 {% endblock %}

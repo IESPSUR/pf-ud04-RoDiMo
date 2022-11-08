@@ -1,13 +1,21 @@
 {% extends 'tienda/base.html' %}
 
 {% block content %}
-    <h2>Producto</h2>
-    {% if producto %}
+    <h2>Productos</h2>
+
+
+        <form action="{% url 'listado_compra' %}" method="POST">
+            {% csrf_token %}
+            <input name="buscar" placeholder="Nombre produto" id="buscador">
+            <input type="submit" value="Buscar"/>
+        </form>
+        <br>
+        <br>
         {% for p in producto %}
 
             <a href="{% url 'checkout' p.id %}"><h6>{{ p.nombre }}</h6></a>
 
         {% endfor %}
 
-    {% endif %}
+
 {% endblock %}
