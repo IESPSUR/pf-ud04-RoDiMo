@@ -12,7 +12,7 @@ class Marca(models.Model):
 
 
 class Producto(models.Model):
-    nombre = models.CharField(max_length=60, unique=True)
+    nombre = models.CharField(max_length=60)
     modelo = models.CharField(max_length=60)
     unidades = models.IntegerField()
     precio = models.FloatField()
