@@ -1,0 +1,13 @@
+{% extends 'tienda/base.html' %}
+
+{% block content %}
+    <h2>Producto</h2>
+    {% if producto %}
+        {% for p in producto %}
+
+            <a href="{% url 'checkout' p.id %}"><h6>{{ p.nombre }}</h6></a>
+
+        {% endfor %}
+
+    {% endif %}
+{% endblock %}

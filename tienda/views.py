@@ -1,11 +1,13 @@
+from datetime import datetime
+
 from django.contrib.auth.forms import AuthenticationForm
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import *
-from django.contrib.auth.decorators import login_required
 
 
 # Create your views here.
 
+# CRUD
 def welcome(request):
     return render(request, 'tienda/index.html', {})
 
@@ -69,3 +71,23 @@ def eliminar_prod(request, pk):
     }
     return render(request, 'tienda/cofirmar_borrado.html', contexto)
 
+
+# Proceso de Compra
+def listado_compra(request):
+    producto = Producto.objects.all()
+
+    return render(request, 'tienda/listado_compra.html', {'producto': producto})
+
+
+def checkout(request, pk):
+    compra = get_object_or_404(Compra, id=pk)
+    form = CheckoutForm(instance=compra)
+    if request.method == "POST":
+        form = CheckoutForm(request.POST)
+        if form.is_valid():
+
+            compra.nombre = form.cleaned_data['nombre']
+            compra.unidades = form.cleaned_data['unidades']
+            compra.importe = form.cleaned_data['importe']
+            compra.fecha = datetime.now()
+    return render(request, 'tienda/checkout.html', {'form': form})

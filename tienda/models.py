@@ -26,10 +26,16 @@ class Compra(models.Model):
     fecha = models.DateTimeField()
     importe = models.FloatField()
     unidades = models.IntegerField()
-    nombre = models.ForeignKey('Producto', to_field='nombre', related_name='Nombre', on_delete=models.CASCADE)
+    nombre = models.ForeignKey('Producto', on_delete=models.CASCADE)
 
 
 class ProductoForm(ModelForm):
     class Meta:
         model = Producto
+        fields = '__all__'
+
+
+class CheckoutForm(ModelForm):
+    class Meta:
+        model = Compra
         fields = '__all__'

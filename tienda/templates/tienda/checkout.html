@@ -1,0 +1,11 @@
+{% extends 'tienda/base.html' %}
+
+{% block content %}
+    <h2>Producto</h2>
+    <form method="POST">
+    {% csrf_token %}
+        {{ form }}
+        <input type="submit" value="Submit">
+    </form>
+
+{% endblock %}
