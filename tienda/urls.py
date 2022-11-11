@@ -14,4 +14,10 @@ urlpatterns = [
     # Compra
     path('tienda/compra', views.listado_compra, name='listado_compra'),
     path('tienda/checkout/<int:pk>', views.checkout, name='checkout'),
+
+    # Registro , logeo, deslogeo usuarios
+    path('tienda/registro', views.registro_usuario, name='registro'),
+    path('tienda/login', views.login_usuario, name='login'),
+    path('tienda/logout', views.logout_usuario, name='logout'),
+
 ]

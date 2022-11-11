@@ -1,10 +1,14 @@
 from datetime import datetime
 
+from django.contrib import messages
+from django.contrib.auth import login, authenticate, logout
+from django.contrib.auth.forms import AuthenticationForm
 from django.core.exceptions import ValidationError
 from django.db.models import Q
 from django.http import request
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import *
+from .forms import *
 
 
 # Create your views here.
@@ -114,3 +118,44 @@ def checkout(request, pk):
                                                             'pk': pk, 'validacion_unidades': validacion_unidades})
     else:
         return render(request, 'tienda/checkout.html', {'form': form, 'producto': producto, 'pk': pk})
+
+
+#### Registrar, logear y desogear usuarios #####
+
+def registro_usuario(request):
+    if request.method == "POST":
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            us = form.save()
+            login(request, us)
+            messages.success(request, "Registro exitoso")
+            return redirect('welcome')
+        messages.error(request, "Registro invalido. Información erronea")
+    form = UserCreationForm()
+    return render(request, "tienda/registro.html", {"formulario_registro": form})
+
+
+def login_usuario(request):
+    if request.method == "POST":
+        form = AuthenticationForm(request, data=request.POST)
+        if form.is_valid():
+            username = form.cleaned_data.get('username')
+            password = form.cleaned_data.get('password')
+            user = authenticate(username=username, password=password)
+
+            if user is not None:
+                login(request, user)
+                messages.info(request, f"You are now logged in as {username}.")
+                return redirect('welcome')
+            else:
+                messages.error(request, f"Invalid username or password")
+        else:
+            messages.error(request, f"Invalid username or password")
+    form = AuthenticationForm()
+    return render(request, 'tienda/login.html', {'formulario_login':form})
+
+
+def logout_usuario(request):
+    logout(request)
+    messages.info(request, "Se ha deslogeado satisfactoriamente")
+    return redirect('welcome')
