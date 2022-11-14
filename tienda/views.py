@@ -98,6 +98,7 @@ def checkout(request, pk):
     form = CheckoutForm()
     producto = Producto.objects.all()
     p = get_object_or_404(Producto, id=pk)
+
     # Comprueba que el numero de unidades introducidas sea menor
     # a las que hay en la base de datos.(Este valor se pasará al template)
     validacion_unidades = True;
@@ -108,12 +109,23 @@ def checkout(request, pk):
             # Obtengo las unidades del formulario
             unidades = form.cleaned_data['unidades']
 
+            if request.user.is_authenticated:
+                usuario = request.user.id
+            else:
+                usuario = None
+
             # Compruebo la cantidad de unidades
             if unidades > p.unidades:
                 validacion_unidades = False
             else:
                 p.unidades = p.unidades - unidades
                 p.save()
+
+                Compra.objects.create(fecha = timezone.now(), importe= p.precio, unidades=unidades, producto=p, usuario_id=usuario)
+
+
+
+
             return render(request, 'tienda/checkout.html', {'form': form, 'unidades': unidades, 'producto': producto,
                                                             'pk': pk, 'validacion_unidades': validacion_unidades})
     else:
@@ -152,7 +164,7 @@ def login_usuario(request):
         else:
             messages.error(request, f"Invalid username or password")
     form = AuthenticationForm()
-    return render(request, 'tienda/login.html', {'formulario_login':form})
+    return render(request, 'tienda/login.html', {'formulario_login': form})
 
 
 def logout_usuario(request):
