@@ -109,7 +109,7 @@ def checkout(request, pk):
             # Obtengo las unidades del formulario
             unidades = form.cleaned_data['unidades']
 
-            #Obtener id del usuario
+            # Obtener id del usuario
             if request.user.is_authenticated:
                 usuario = request.user.id
             else:
@@ -121,7 +121,7 @@ def checkout(request, pk):
             else:
                 p.unidades = p.unidades - unidades
                 p.save()
-                
+
                 # Añadir la informacion a Compras
                 Compra.objects.create(fecha=timezone.now(), importe=p.precio, unidades=unidades, producto=p,
                                       usuario_id=usuario)
