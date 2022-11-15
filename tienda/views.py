@@ -152,9 +152,8 @@ def marcas_detalles(request, nombre):
 
 
 def top_productos(request):
-    productos = Compra.objects.all().values('producto__nombre').annotate(unidades_vendidas=Sum('unidades')).order_by(
-        '-unidades_vendidas')[:10]
-
+    productos = Compra.objects.values('producto').annotate(unidades_vendidas=Sum('unidades')).order_by('-unidades_vendidas')[:10]
+    productos= list(productos)
 
     return render(request, 'tienda/top_productos.html', {'productos': productos})
 

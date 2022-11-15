@@ -6,7 +6,8 @@
 </head>
 <body>
     {% for p in productos %}
-        <p>Nombre: {{ p }}</p>
+        <h1>Nombre: {{ p.producto }}</h1>
+        <p>Unidades: {{ p.unidades_vendidas }}</p>
 
     {% endfor %}
 </body>

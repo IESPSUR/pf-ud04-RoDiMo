@@ -16,7 +16,7 @@ class Marca(models.Model):
 
 
 class Producto(models.Model):
-    nombre = models.CharField(max_length=60)
+    nombre = models.CharField(max_length=60, unique=True)
     modelo = models.CharField(max_length=60)
     unidades = models.IntegerField()
     precio = models.FloatField()
@@ -31,7 +31,7 @@ class Compra(models.Model):
     fecha = models.DateTimeField(default=timezone.now)
     importe = models.FloatField()
     unidades = models.IntegerField()
-    producto = models.ForeignKey('Producto', on_delete=models.CASCADE)
+    producto = models.ForeignKey('Producto', to_field='nombre', related_name='Nombre', on_delete=models.CASCADE)
     usuario = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
 
     def __str__(self):
