@@ -1,0 +1,26 @@
+{% extends 'tienda/base.html' %}
+
+{% block content %}
+    <h2>Producto</h2>
+
+     <h6>Usuario: {{ request.user }}</h6>
+        {% for p in listaproducto %}
+
+
+            <ul>
+                <li>
+                    Fecha de compra: {{ p.fecha }}
+                </li>
+                <li>
+                    Importe: {{ p.importe }}
+                </li>
+                <li>
+                    Unidades: {{ p.unidades }}
+                </li>
+                <li>
+                    Producto:  {{ p.producto_id }}
+                </li>
+            </ul>
+        {% endfor %}
+
+{% endblock %}

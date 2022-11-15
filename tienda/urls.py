@@ -18,7 +18,9 @@ urlpatterns = [
     #Informes
     path('tienda/informes', views.informe, name='informes'),
     path('tienda/informes/marcas', views.informes_marca, name='listado_informes'),
+    path('tienda/informes/usuarios', views.informes_usuario, name='listado_usuarios'),
     path('tienda/informes/marcas_detalles/<str:nombre>', views.marcas_detalles, name='marcas_detalles'),
+    path('tienda/informes/usuarios_detalles/<str:usuario>', views.usuarios_detalles, name='usuarios_detalles'),
     path('tienda/informes/top_productos', views.top_productos, name='top_productos'),
 
 

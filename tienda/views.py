@@ -152,10 +152,23 @@ def marcas_detalles(request, nombre):
 
 
 def top_productos(request):
-    productos = Compra.objects.values('producto').annotate(unidades_vendidas=Sum('unidades')).order_by('-unidades_vendidas')[:10]
-    productos= list(productos)
+    productos = Compra.objects.values('producto__nombre').annotate(unidades_vendidas=Sum('unidades')).order_by(
+        '-unidades_vendidas')[:10]
+    productos = list(productos)
 
     return render(request, 'tienda/top_productos.html', {'productos': productos})
+
+
+def informes_usuario(request):
+    compras = User.objects.all().values('username')
+    lista = list(compras)
+
+    return render(request, 'tienda/listado_usuarios.html', {'lista': lista})
+
+
+def usuarios_detalles(request, usuario):
+    listaproducto = Compra.objects.filter(usuario=request.user).values()
+    return render(request, 'tienda/usuarios_compras.html', {'listaproducto': listaproducto})
 
 
 #### Registrar, logear y desogear usuarios #####

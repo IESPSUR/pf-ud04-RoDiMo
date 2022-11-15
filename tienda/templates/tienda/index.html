@@ -1,10 +1,22 @@
 {% extends 'tienda/base.html' %}
 
 {% block content %}
-	<h2>Bienvenido a la tienda virtual</h2>
+	<h2>Bienvenido a la tienda virtual {{ user }}</h2>
 	<ul>
         <a href={% url 'listado'%}><li>Gestión de productos</li></a>
 		 <a href={% url 'informes' %}><li>Informes</li></a>
         <a href={% url 'listado_compra'%}><li>Realizar compra</li></a>
 	</ul>
+    <br><br>
+
+    {% if user.is_authenticated %}
+        <a href={% url 'logout' %}><p>Cerrar sesión</p></a>
+
+    {% else %}
+         <a href={% url 'registro' %}><p>Registrate</p></a>
+         <a href={% url 'login' %}><p>Inicio de sesión</p></a>
+    {% endif %}
+
+
+
 {% endblock %}

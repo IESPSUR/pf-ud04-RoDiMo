@@ -3,9 +3,9 @@
 {% block content %}
         {% for p in lista %}
 
-            <form method="post" action={% url 'marcas_detalles' p.nombre %}>
+            <form method="post" action={% url 'usuarios_detalles' p.username %}>
                 {% csrf_token %}
-                <button type="submit">{{ p.nombre }}</button>
+                <button type="submit">{{ p.username }}</button>
             </form>
 
         {% endfor %}
