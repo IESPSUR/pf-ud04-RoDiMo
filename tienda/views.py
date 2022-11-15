@@ -4,7 +4,7 @@ from django.contrib import messages
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.forms import AuthenticationForm
 from django.core.exceptions import ValidationError
-from django.db.models import Q
+from django.db.models import Q, Sum
 from django.http import request
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import *
@@ -16,10 +16,6 @@ from .forms import *
 # CRUD
 def welcome(request):
     return render(request, 'tienda/index.html', {})
-
-
-def informe(request):
-    return render(request, 'tienda/informe.html', {})
 
 
 def listado(request):
@@ -138,6 +134,11 @@ def checkout(request, pk):
 
 
 ######## Informes ##########
+
+def informe(request):
+    return render(request, 'tienda/informe.html', {})
+
+
 def informes_marca(request):
     marcas = Marca.objects.all().values()
     lista = list(marcas)
@@ -148,6 +149,14 @@ def informes_marca(request):
 def marcas_detalles(request, nombre):
     listaproducto = Producto.objects.filter(marca__nombre__icontains=nombre).values()
     return render(request, 'tienda/listado.html', {'listaproducto': listaproducto})
+
+
+def top_productos(request):
+    productos = Compra.objects.all().values('producto__nombre').annotate(unidades_vendidas=Sum('unidades')).order_by(
+        '-unidades_vendidas')[:10]
+
+
+    return render(request, 'tienda/top_productos.html', {'productos': productos})
 
 
 #### Registrar, logear y desogear usuarios #####

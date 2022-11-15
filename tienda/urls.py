@@ -18,12 +18,14 @@ urlpatterns = [
     #Informes
     path('tienda/informes', views.informe, name='informes'),
     path('tienda/informes/marcas', views.informes_marca, name='listado_informes'),
-    path('tienda/marcas_detalles/<str:nombre>', views.marcas_detalles, name='marcas_detalles'),
+    path('tienda/informes/marcas_detalles/<str:nombre>', views.marcas_detalles, name='marcas_detalles'),
+    path('tienda/informes/top_productos', views.top_productos, name='top_productos'),
 
 
     # Registro , logeo, deslogeo usuarios
     path('tienda/registro', views.registro_usuario, name='registro'),
     path('tienda/login', views.login_usuario, name='login'),
     path('tienda/logout', views.logout_usuario, name='logout'),
+
 
 ]
