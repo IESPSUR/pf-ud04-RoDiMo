@@ -3,7 +3,7 @@
 {% block content %}
         {% for p in lista %}
 
-            <form method="post" action={% url 'usuarios_detalles' p.username %}>
+            <form method="post" action={% url 'usuarios_detalles' p.id %}>
                 {% csrf_token %}
                 <button type="submit">{{ p.username }}</button>
             </form>

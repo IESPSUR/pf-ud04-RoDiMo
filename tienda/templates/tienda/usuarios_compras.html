@@ -1,9 +1,12 @@
 {% extends 'tienda/base.html' %}
 
 {% block content %}
-    <h2>Producto</h2>
 
-     <h6>Usuario: {{ request.user }}</h6>
+
+        {% for u in usuario %}
+            <h2>Usuario: {{ u.username }}</h2>
+        {% endfor %}
+
         {% for p in listaproducto %}
 
 

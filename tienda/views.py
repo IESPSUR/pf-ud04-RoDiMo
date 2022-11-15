@@ -160,15 +160,16 @@ def top_productos(request):
 
 
 def informes_usuario(request):
-    compras = User.objects.all().values('username')
+    compras = User.objects.all().values()
     lista = list(compras)
 
     return render(request, 'tienda/listado_usuarios.html', {'lista': lista})
 
 
 def usuarios_detalles(request, usuario):
-    listaproducto = Compra.objects.filter(usuario=request.user).values()
-    return render(request, 'tienda/usuarios_compras.html', {'listaproducto': listaproducto})
+    listaproducto = Compra.objects.filter(usuario=usuario).values()
+    user = User.objects.values('username').filter(id=usuario)
+    return render(request, 'tienda/usuarios_compras.html', {'listaproducto': listaproducto, 'usuario':user})
 
 
 #### Registrar, logear y desogear usuarios #####
