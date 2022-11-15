@@ -2,8 +2,8 @@
 
 {% block content %}
     <h2>Producto</h2>
-    {% if producto %}
-        {% for p in producto %}
+
+        {% for p in listaproducto %}
 
             <h6>{{ p.nombre }}</h6>
             <ul>
@@ -34,7 +34,6 @@
             {% endif %}
         {% endfor %}
 
-    {% endif %}
     {% if user.is_staff %}
         <h2><a href="{% url 'nuevo' %}">Añade un nuevo producto</a></h2>
     {% endif %}

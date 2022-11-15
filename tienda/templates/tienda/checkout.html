@@ -3,36 +3,32 @@
 {% block content %}
 
 
-        {% for p in producto %}
-            {% if p.id ==  pk%}
-                <h2>Producto: {{ p.nombre }}</h2>
+
+                <h2>Producto: {{ producto.nombre }}</h2>
                  <ul>
                     <li>
-                        ID: {{ p.id }}
+                        ID: {{ producto.id }}
                     </li>
                     <li>
-                        Modelo: {{ p.modelo }}
+                        Modelo: {{ producto.modelo }}
                     </li>
                     <li>
-                        Unidades: {{ p.unidades }}
+                        Unidades: {{ producto.unidades }}
                     </li>
                     <li>
-                        Precio:  {{ p.precio }}€
+                        Precio:  {{ producto.precio }}€
                     </li>
                     <li>
-                        Detalles: {{ p.detalles }}
+                        Detalles: {{ producto.detalles }}
                     </li>
                     <li>
-                        Marca: {{ p.marca }}
+                        Marca: {{ producto.marca }}
                     </li>
                  </ul>
 
                 {% if validacion_unidades == False %}
                     <p>Se excede el numero de unidades</p>
                 {% endif %}
-            {% endif %}
-
-        {% endfor %}
 
 
     <form method="POST">

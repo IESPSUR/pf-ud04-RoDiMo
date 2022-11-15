@@ -18,10 +18,15 @@ def welcome(request):
     return render(request, 'tienda/index.html', {})
 
 
+def informe(request):
+    return render(request, 'tienda/informe.html', {})
+
+
 def listado(request):
     producto = Producto.objects.all()
+    listaproducto = list(producto)
 
-    return render(request, 'tienda/listado.html', {'producto': producto})
+    return render(request, 'tienda/listado.html', {'listaproducto': listaproducto})
 
 
 def nuevo_prod(request):
@@ -126,10 +131,23 @@ def checkout(request, pk):
                 Compra.objects.create(fecha=timezone.now(), importe=p.precio, unidades=unidades, producto=p,
                                       usuario_id=usuario)
 
-            return render(request, 'tienda/checkout.html', {'form': form, 'unidades': unidades, 'producto': producto,
+            return render(request, 'tienda/checkout.html', {'form': form, 'producto': p,
                                                             'pk': pk, 'validacion_unidades': validacion_unidades})
     else:
-        return render(request, 'tienda/checkout.html', {'form': form, 'producto': producto, 'pk': pk})
+        return render(request, 'tienda/checkout.html', {'form': form, 'producto': p, 'pk': pk})
+
+
+######## Informes ##########
+def informes_marca(request):
+    marcas = Marca.objects.all().values()
+    lista = list(marcas)
+
+    return render(request, 'tienda/listado_informes.html', {'lista': lista})
+
+
+def marcas_detalles(request, nombre):
+    listaproducto = Producto.objects.filter(marca__nombre__icontains=nombre).values()
+    return render(request, 'tienda/listado.html', {'listaproducto': listaproducto})
 
 
 #### Registrar, logear y desogear usuarios #####
