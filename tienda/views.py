@@ -1,3 +1,4 @@
+from _ast import Mult
 from datetime import datetime
 
 from django.contrib import messages
@@ -124,7 +125,7 @@ def checkout(request, pk):
                 p.save()
 
                 # Añadir la informacion a Compras
-                Compra.objects.create(fecha=timezone.now(), importe=p.precio, unidades=unidades, producto=p,
+                Compra.objects.create(fecha=timezone.now(), importe=p.precio * unidades, unidades=unidades, producto=p,
                                       usuario_id=usuario)
 
             return render(request, 'tienda/checkout.html', {'form': form, 'producto': p,
@@ -159,6 +160,15 @@ def top_productos(request):
     return render(request, 'tienda/top_productos.html', {'productos': productos})
 
 
+def top_usuarios(request):
+    usuarios = Compra.objects.values('usuario').annotate(importe_compras=Sum('importe')).order_by(
+        '-importe_compras')[:10]
+
+    user = User.objects.values('username')
+
+    return render(request, 'tienda/top_usuarios.html', {'usuarios': usuarios, 'user': user})
+
+
 def informes_usuario(request):
     compras = User.objects.all().values()
     lista = list(compras)
@@ -169,7 +179,7 @@ def informes_usuario(request):
 def usuarios_detalles(request, usuario):
     listaproducto = Compra.objects.filter(usuario=usuario).values()
     user = User.objects.values('username').filter(id=usuario)
-    return render(request, 'tienda/usuarios_compras.html', {'listaproducto': listaproducto, 'usuario':user})
+    return render(request, 'tienda/usuarios_compras.html', {'listaproducto': listaproducto, 'usuario': user})
 
 
 #### Registrar, logear y desogear usuarios #####

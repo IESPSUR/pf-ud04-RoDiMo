@@ -22,6 +22,7 @@ urlpatterns = [
     path('tienda/informes/marcas_detalles/<str:nombre>', views.marcas_detalles, name='marcas_detalles'),
     path('tienda/informes/usuarios_detalles/<str:usuario>', views.usuarios_detalles, name='usuarios_detalles'),
     path('tienda/informes/top_productos', views.top_productos, name='top_productos'),
+    path('tienda/informes/top_usuarios', views.top_usuarios, name='top_usuarios'),
 
 
     # Registro , logeo, deslogeo usuarios

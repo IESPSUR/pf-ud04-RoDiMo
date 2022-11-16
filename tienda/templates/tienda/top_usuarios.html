@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    {% for p in usuarios %}
+
+
+        <h1>Nombre: {{ p.usuario}}</h1>
+
+        <p>Importe: {{ p.importe_compras}}</p>
+        <p>Unidades compradas: {{ p.unidades_compras}}</p>
+
+    {% endfor %}
+</body>
+</html>
