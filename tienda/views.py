@@ -5,6 +5,7 @@ from django.contrib import messages
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.forms import AuthenticationForm
 from django.core.exceptions import ValidationError
+from django.db import transaction
 from django.db.models import Q, Sum
 from django.http import request
 from django.shortcuts import render, redirect, get_object_or_404
@@ -96,9 +97,10 @@ def listado_compra(request):
 
 
 # Checkout
+@transaction.atomic
 def checkout(request, pk):
     form = CheckoutForm()
-    producto = Producto.objects.all()
+
     p = get_object_or_404(Producto, id=pk)
 
     # Comprueba que el numero de unidades introducidas sea menor
@@ -114,6 +116,7 @@ def checkout(request, pk):
             # Obtener id del usuario
             if request.user.is_authenticated:
                 usuario = request.user.id
+
             else:
                 usuario = None
 
@@ -125,8 +128,9 @@ def checkout(request, pk):
                 p.save()
 
                 # Añadir la informacion a Compras
+                u = get_object_or_404(User, id=usuario)
                 Compra.objects.create(fecha=timezone.now(), importe=p.precio * unidades, unidades=unidades, producto=p,
-                                      usuario_id=usuario)
+                                      usuario=u)
 
             return render(request, 'tienda/checkout.html', {'form': form, 'producto': p,
                                                             'pk': pk, 'validacion_unidades': validacion_unidades})
@@ -161,12 +165,10 @@ def top_productos(request):
 
 
 def top_usuarios(request):
-    usuarios = Compra.objects.values('usuario').annotate(importe_compras=Sum('importe')).order_by(
+    usuarios = Compra.objects.values('usuario_id').annotate(importe_compras=Sum('importe')).order_by(
         '-importe_compras')[:10]
 
-    user = User.objects.values('username')
-
-    return render(request, 'tienda/top_usuarios.html', {'usuarios': usuarios, 'user': user})
+    return render(request, 'tienda/top_usuarios.html', {'usuarios': usuarios})
 
 
 def informes_usuario(request):
