@@ -1,13 +1,9 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends 'tienda/base.html' %}
+
+{% block content %}
     <a href="{% url 'listado_informes' %}"><p>Listado marcas</p></a>
     <a href="{% url 'listado_usuarios' %}"><p>Compras por usuario </p></a>
  <a href="{% url 'top_productos' %}"><p>Top productos</p></a>
  <a href="{% url 'top_usuarios' %}"><p>Top usuarios</p></a>
-</body>
-</html>
+{% endblock %}
+

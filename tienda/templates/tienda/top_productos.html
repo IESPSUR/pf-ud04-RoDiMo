@@ -1,14 +1,10 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends 'tienda/base.html' %}
+
+{% block content %}
     {% for p in productos %}
         <h1>Nombre: {{ p.producto__nombre }}</h1>
         <p>Unidades: {{ p.unidades_vendidas }}</p>
 
     {% endfor %}
-</body>
-</html>
+{% endblock %}
+
