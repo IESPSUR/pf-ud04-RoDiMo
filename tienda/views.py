@@ -122,18 +122,18 @@ def checkout(request, pk):
 
             # Compruebo la cantidad de unidades
             if unidades > p.unidades:
-                validacion_unidades = False
+                mensaje = messages.add_message(request, messages.INFO, f"El numero de unidades excede a las disponibles .")
+                return redirect('checkout', pk )
             else:
                 p.unidades = p.unidades - unidades
                 p.save()
 
                 # Añadir la informacion a Compras
-                u = get_object_or_404(User, id=usuario)
-                Compra.objects.create(fecha=timezone.now(), importe=p.precio * unidades, unidades=unidades, producto=p,
-                                      usuario=u)
 
-            return render(request, 'tienda/checkout.html', {'form': form, 'producto': p,
-                                                            'pk': pk, 'validacion_unidades': validacion_unidades})
+                Compra.objects.create(fecha=timezone.now(), importe=p.precio * unidades, unidades=unidades, producto=p,
+                                      usuario_id=usuario)
+
+            return redirect("listado_compra")
     else:
         return render(request, 'tienda/checkout.html', {'form': form, 'producto': p, 'pk': pk})
 
@@ -165,7 +165,7 @@ def top_productos(request):
 
 
 def top_usuarios(request):
-    usuarios = Compra.objects.values('usuario_id').annotate(importe_compras=Sum('importe')).order_by(
+    usuarios = User.objects.values('username').annotate(importe_compras=Sum('compra__importe')).order_by(
         '-importe_compras')[:10]
 
     return render(request, 'tienda/top_usuarios.html', {'usuarios': usuarios})
@@ -194,7 +194,7 @@ def registro_usuario(request):
             login(request, us)
             messages.success(request, "Registro exitoso")
             return redirect('welcome')
-        messages.error(request, "Registro invalido. Información erronea")
+        messages.add_message(request,messages.INFO, "Registro invalido. Información erronea")
     form = UserCreationForm()
     return render(request, "tienda/registro.html", {"formulario_registro": form})
 
@@ -209,12 +209,12 @@ def login_usuario(request):
 
             if user is not None:
                 login(request, user)
-                messages.info(request, f"You are now logged in as {username}.")
-                return redirect('welcome')
+                messages.add_message(request, messages.INFO, f"Estas conectdo como {username}.")
             else:
-                messages.error(request, f"Invalid username or password")
+                messages.add_message(request, messages.INFO, f"Nombre de usuario o contraseña invalido")
+
         else:
-            messages.error(request, f"Invalid username or password")
+            messages.add_message(request,messages.INFO, f"Nombre de usuario o contraseña invalido")
     form = AuthenticationForm()
     return render(request, 'tienda/login.html', {'formulario_login': form})
 

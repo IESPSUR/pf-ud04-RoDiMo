@@ -8,7 +8,15 @@
             {% csrf_token %}
             {{ formulario_registro }}
 
-            <button class="btn btn-primary" type="submit">Register</button>
+            <button class="btn btn-primary" type="submit">Crear usuario</button>
         </form>
-        <p class="text-center">Ya tienes una cuenta creada, <a href="tienda/login">registrate aquí</a></p>
+
+        {% if messages %}
+            <ul class="messages list-group mb-3">
+                {% for message in messages %}
+                    <li {% if message.tags %} class="{{ message.tags }} list-group-item list-group-item-primary"{% endif %}>{{ message }}</li>
+            {% endfor %}
+            </ul>
+        {% endif %}
+        <p class="text-center">¿Ya tienes una cuenta creada?, <a href="{% url 'login' %}">Inicia sesion aquí</a></p>
 {% endblock %}

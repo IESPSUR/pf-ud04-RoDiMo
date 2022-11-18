@@ -26,9 +26,13 @@
                     </li>
                  </ul>
 
-                {% if validacion_unidades == False %}
-                    <p>Se excede el numero de unidades</p>
-                {% endif %}
+      {% if messages %}
+            <ul class="messages list-group mb-3">
+                {% for message in messages %}
+                    <li {% if message.tags %} class="{{ message.tags }} list-group-item list-group-item-primary"{% endif %}>{{ message }}</li>
+            {% endfor %}
+            </ul>
+        {% endif %}
 
 
     <form method="POST">

@@ -4,11 +4,11 @@
 {% block content %}
     {% for p in usuarios %}
 
-        <p>{{ user.p.usuario_id }}</p>
-        <h1>Nombre: {{ p.usuario_id}}</h1>
+    {% if p.importe_compras  != None%}
+        <h1>Nombre: {{ p.username}}</h1>
 
         <p>Importe: {{ p.importe_compras}}</p>
-
+    {% endif %}
 
     {% endfor %}
 {% endblock %}

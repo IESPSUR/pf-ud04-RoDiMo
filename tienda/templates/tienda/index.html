@@ -1,7 +1,7 @@
 {% extends 'tienda/base.html' %}
 
 {% block content %}
-	<h2>Bienvenido a la tienda virtual {{ user }}</h2>
+	<h2>Bienvenido a la tienda virtual {% if user.is_authenticated %}{{ user }} {% endif %}</h2>
 	<ul>
         <a href={% url 'listado'%}><li>Gestión de productos</li></a>
 		 <a href={% url 'informes' %}><li>Informes</li></a>

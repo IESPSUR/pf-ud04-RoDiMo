@@ -9,6 +9,15 @@
         {{ formulario_login }}
         <button class="btn btn-primary" type="submit">Login</button>
       </form>
-      <p class="text-center">Don't have an account? <a href="/register">Create an account</a>.</p>
+
+      {% if messages %}
+            <ul class="messages list-group mb-3">
+                {% for message in messages %}
+                    <li {% if message.tags %} class="{{ message.tags }} list-group-item list-group-item-primary"{% endif %}>{{ message }}</li>
+            {% endfor %}
+            </ul>
+        {% endif %}
+
+      <p class="text-center">No tienes una cuenta creada? <a href={% url 'registro' %}>Crea una cuenta</a>.</p>
 
 {% endblock %}
